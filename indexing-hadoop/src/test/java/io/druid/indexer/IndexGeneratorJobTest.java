@@ -453,12 +453,6 @@ public class IndexGeneratorJobTest
     verifyJob(new IndexGeneratorJob(config));
   }
 
-  @Test
-  public void testLegacyIndexGeneratorJob() throws IOException
-  {
-    verifyJob(new LegacyIndexGeneratorJob(config));
-  }
-
   private void verifyJob(IndexGeneratorJob job) throws IOException
   {
     JobHelper.runJobs(ImmutableList.<Jobby>of(job), config);

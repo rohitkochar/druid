@@ -184,10 +184,6 @@ public class RealtimePlumberSchoolTest
         rejectionPolicy,
         null,
         null,
-        null,
-        null,
-        null,
-        null,
         null
     );
 

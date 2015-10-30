@@ -309,11 +309,7 @@ public class TaskSerdeTest
                 null,
                 1,
                 new NoneShardSpec(),
-                indexSpec,
-                false,
-                false,
-                null,
-                0.3F
+                indexSpec
             )
         ),
         null
@@ -349,10 +345,6 @@ public class TaskSerdeTest
     Assert.assertEquals(
         task.getRealtimeIngestionSchema().getDataSchema().getGranularitySpec().getSegmentGranularity(),
         task2.getRealtimeIngestionSchema().getDataSchema().getGranularitySpec().getSegmentGranularity()
-    );
-    Assert.assertEquals(
-        task.getRealtimeIngestionSchema().getTuningConfig().getAggregationBufferRatio(),
-        task2.getRealtimeIngestionSchema().getTuningConfig().getAggregationBufferRatio(), 0.0f
     );
   }
 
