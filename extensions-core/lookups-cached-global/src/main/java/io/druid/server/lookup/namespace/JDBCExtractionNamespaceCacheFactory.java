@@ -21,6 +21,7 @@ package io.druid.server.lookup.namespace;
 
 import com.metamx.common.Pair;
 import com.metamx.common.logger.Logger;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import io.druid.common.utils.JodaUtils;
 import io.druid.query.lookup.namespace.ExtractionNamespaceCacheFactory;
 import io.druid.query.lookup.namespace.JDBCExtractionNamespace;
@@ -125,17 +126,23 @@ public class JDBCExtractionNamespaceCacheFactory
 
   private DBI ensureDBI(String id, JDBCExtractionNamespace namespace)
   {
-    final String key = id;
+      final String key = id;
     DBI dbi = null;
     if (dbiCache.containsKey(key)) {
       dbi = dbiCache.get(key);
     }
     if (dbi == null) {
-      final DBI newDbi = new DBI(
-          namespace.getConnectorConfig().getConnectURI(),
-          namespace.getConnectorConfig().getUser(),
-          namespace.getConnectorConfig().getPassword()
-      );
+        MysqlDataSource ds = new MysqlDataSource();
+        ds.setUrl(namespace.getConnectorConfig().getConnectURI());
+        ds.setPassword(namespace.getConnectorConfig().getPassword());
+        ds.setUser(namespace.getConnectorConfig().getUser());
+
+      final DBI newDbi =new DBI(ds);
+//              new DBI(
+//          namespace.getConnectorConfig().getConnectURI(),
+//          namespace.getConnectorConfig().getUser(),
+//          namespace.getConnectorConfig().getPassword()
+//      );
       dbiCache.putIfAbsent(key, newDbi);
       dbi = dbiCache.get(key);
     }
